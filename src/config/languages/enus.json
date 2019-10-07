@@ -1,0 +1,56 @@
+{
+  "enus": "en-btnus",
+  "language": {
+    "selectLanguage": "Selecione o Idioma"
+  },
+
+  "btn": {
+    "save": "Save",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "cancel": "Cancel",
+    "yesDelete": "Yes Delete"
+  },
+
+  "apps": {
+
+    "list": {
+      "title": "Application List"
+    },
+
+    "form": {
+      "title": "Edit Application",
+
+      "field": {
+        "name": "Application Name",
+        "displayName": "Display Name",
+        "apiDomain": "API Domain",
+        "description": "Description"
+      },
+
+      "modal": {
+        "title": "Atention!",
+        "content": "The form data will be saved. Do you wish to continue?"
+      },
+
+      "validation": {
+
+        "emptyAppName": "Give the App a title",
+        "emptyDisplayName": "A display name is required",
+        "emptyApiDomain": "The API domain is required"
+
+      }
+
+    },
+
+    "delete": {
+
+      "modal": {
+        "title": "Atention!",
+        "content": "This application will be deleted. Are you sure you want to continue?"
+      }
+    }
+
+  }
+}

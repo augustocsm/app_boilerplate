@@ -1,0 +1,38 @@
+{
+  "ptbr": "pt-br",
+  "language": {
+    "selectLanguage": "Selecione o Idioma"
+  },
+
+  "apps": {
+
+    "list": {
+      "title": "Aplicações"
+    },
+
+    "form": {
+      "title": "Edit Application",
+      "saveBtn": "Save",
+
+      "field": {
+        "name": "Application Name",
+        "displayName": "Display Name",
+        "apiDomain": "API Domain",
+        "description": "Description"
+      },
+
+      "modal": {
+        "title": "Atention!",
+        "content": "The form data will be saved. Do you wish to continue?"
+      },
+
+      "validation": {
+        "emptyAppName": "Give the App a title",
+        "emptyDisplayName": "A display name is required",
+        "emptyApiDomain": "The API domain is required"
+      }
+
+    }
+
+  }
+}
