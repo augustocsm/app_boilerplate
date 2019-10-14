@@ -1,3 +1,20 @@
+# App Bootstrap
+
+`Features`
+Redux Storage
+
+React Hooks
+
+CRUD Form with Formik
+
+Multilanguage with i18next
+
+Semantic-UI
+
+EsLint
+
+*************************************
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
