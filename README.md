@@ -1,6 +1,7 @@
 # App Bootstrap
 
-`Features`
+## Features
+
 Redux Storage
 
 React Hooks
