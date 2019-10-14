@@ -1,59 +1,49 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchApp, deleteApp } from "./../../actions/apps";
+import { useTranslation } from "react-i18next";
 import { Button } from "semantic-ui-react";
-import ConfirmModal from "./common/ConfirmModal";
-import LanguageContext from "../../contexts/LanguageContext";
+import { ConfirmModal } from "./common";
 
-class AppDelete extends React.Component {
-  componentDidMount() {
-    this.props.fetchApp(this.props.match.params.id);
-  }
+const AppDelete = props => {
+  const { t } = useTranslation();
 
-  renderConfirmBtn = () => {
-    const id = this.props.match.params.id;
+  useEffect(() => {
+    props.fetchApp(props.match.params.id);
+  }, []);
+
+  const renderConfirmBtn = () => {
+    const id = props.match.params.id;
+
     return (
-      <LanguageContext.Consumer>
-        {texts => (
-          <>
-            <Button onClick={this.props.history.goBack} negative>
-              {texts.btn.no}
-            </Button>
+      <>
+        <Button onClick={props.history.goBack} negative>
+          {t("btn.no")}
+        </Button>
 
-            <Button
-              onClick={() => this.props.deleteApp(id)}
-              positive
-              labelPosition="right"
-              icon="checkmark"
-              content={texts.btn.yesDelete}
-            />
-          </>
-        )}
-      </LanguageContext.Consumer>
+        <Button
+          onClick={() => props.deleteApp(id)}
+          positive
+          labelPosition="right"
+          icon="checkmark"
+          content={t("btn.yesDelete")}
+        />
+      </>
     );
   };
 
-  render() {
-    return (
-      <LanguageContext.Consumer>
-        {texts => {
-          console.log(texts);
-          const { title, content } = texts.apps.delete.modal;
-          return (
-            <div>
-              <ConfirmModal
-                open={true}
-                header={title}
-                content={content}
-                actions={this.renderConfirmBtn}
-              />
-            </div>
-          );
-        }}
-      </LanguageContext.Consumer>
-    );
-  }
-}
+  return (
+    <div>
+      <ConfirmModal
+        status={true}
+        header={t("apps.delete.modal.title")}
+        content={t("apps.delete.modal.content")}
+        actions={renderConfirmBtn}
+      />
+    </div>
+  );
+};
 
 const mapStateToProps = (state, ownProps) => {
   return { app: state.apps[ownProps.match.params.id] };

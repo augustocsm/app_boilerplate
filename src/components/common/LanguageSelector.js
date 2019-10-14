@@ -1,21 +1,18 @@
 import React from "react";
-import content from "./../../config/languages";
+import { useTranslation } from "react-i18next";
 
-class LanguageSelector extends React.Component {
-  render() {
-    return (
-      <div>
-        <i
-          className="flag us"
-          onClick={() => this.props.onLangChange(content.en)}
-        />
-        <i
-          className="flag br"
-          onClick={() => this.props.onLangChange(content.ptbr)}
-        />
-      </div>
-    );
-  }
-}
+const LanguageSelector = () => {
+  const { i18n } = useTranslation();
+
+  const en_us = () => i18n.changeLanguage("en_us");
+  const pt_br = () => i18n.changeLanguage("pt_br");
+
+  return (
+    <div>
+      <i className="us flag" onClick={en_us} />
+      <i className="br flag" onClick={pt_br} />
+    </div>
+  );
+};
 
 export default LanguageSelector;

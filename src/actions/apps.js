@@ -17,12 +17,14 @@ export const createApp = formValues => async (dispatch, getState) => {
 };
 
 export const fetchApps = () => async dispatch => {
+  //console.log("Fetch Apps @ API");
   const response = await apps.get("/applications");
 
   await dispatch({ type: FETCH_APPS, payload: response.data });
 };
 
 export const fetchApp = id => async dispatch => {
+  //console.log("Fetch App @ API");
   const response = await apps.get(`/applications/${id}`);
 
   await dispatch({ type: FETCH_APP, payload: response.data });

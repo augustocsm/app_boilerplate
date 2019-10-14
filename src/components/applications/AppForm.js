@@ -1,50 +1,13 @@
+//import { Field, reduxForm } from "redux-form";
 import React from "react";
-import { Field, reduxForm } from "redux-form";
-import CrudBar from "./common/CrudBar";
-import ConfirmModal from "./common/ConfirmModal";
-import RemoteSubmitButton from "./common/RemoteSubmitButton";
+import { useTranslation } from "react-i18next";
+import { Formik, Form } from "formik";
+import { FormField, SaveButton, CrudBar, PlaceHolder } from "./common";
 
-class AppForm extends React.Component {
-  state = {
-    modal: {
-      open: false
-    }
-  };
+const AppForm = props => {
+  const { t } = useTranslation();
 
-  renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-
-    const validationText = this.props.texts.apps.form.validation;
-
-    return (
-      <div className={className}>
-        <label>
-          <h5>{label}</h5>
-        </label>
-
-        <input {...input} autoComplete="on" />
-
-        {meta.touched && meta.error && (
-          <span>{validationText[meta.error]}</span>
-        )}
-      </div>
-    );
-  };
-
-  renderTextarea({ input, label, meta }) {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-
-    return (
-      <div className={className}>
-        <label>
-          <h5>{label}</h5>
-        </label>
-        <textarea {...input} autoComplete="on" />
-      </div>
-    );
-  }
-
-  renderAdminBtn = app => {
+  const renderAdminBtn = app => {
     if (!app) {
       return null;
     }
@@ -55,154 +18,86 @@ class AppForm extends React.Component {
     );
   };
 
-  renderSaveBtn = isTrue => {
-    const { save } = this.props.texts.btn;
+  const validate = formValues => {
+    const errors = {};
 
-    if (isTrue) {
-      return (
-        <button
-          className="ui button primary"
-          onClick={e => {
-            this.riseModal(true);
-          }}
-        >
-          {save}
-        </button>
-      );
-    } else {
-      return <div className="ui button">{save}</div>;
+    if (!formValues.appName) {
+      errors.appName = t("apps.form.validation.emptyAppName");
     }
+
+    if (!formValues.displayName) {
+      errors.displayName = t("apps.form.validation.emptyDisplayName");
+    }
+
+    if (!formValues.apiDomain) {
+      errors.apiDomain = t("apps.form.validation.emptyApiDomain");
+    }
+
+    return errors;
   };
 
-  renderModalBtn = () => {
-    const { no, confirm } = this.props.texts.btn;
-
+  if (!props.initialValues) {
     return (
       <>
-        <button
-          onClick={() => this.riseModal(false)}
-          className="ui button negative"
-        >
-          {no}
-        </button>
-
-        <RemoteSubmitButton
-          positive
-          labelPosition="right"
-          icon="checkmark"
-          text={confirm}
-          formName="appForm"
-        />
+        <PlaceHolder />
       </>
     );
-  };
+  }
 
-  riseModal = isRised => {
-    this.setState({
-      modal: {
-        open: isRised
-      }
-    });
-  };
+  return (
+    <Formik
+      initialValues={props.initialValues}
+      onSubmit={props.onSubmit}
+      validate={validate}
+      render={({ errors, touched, submitForm }) => (
+        <div className="ui container">
+          <div className="ui segment">
+            <Form className="ui fluid form">
+              <h2 className="ui left floated header">{t("apps.form.title")}</h2>
 
-  render() {
-    const { error, handleSubmit, initialValues, title, submitBtn } = this.props;
+              {renderAdminBtn(props.initialValues)}
 
-    const texts = this.props.texts.apps.form;
+              <div className="ui clearing divider"></div>
+              <div className="ui two column doubling stackable grid">
+                <div className="column ">
+                  <FormField name="appName" label={t("apps.form.field.name")} />
+                </div>
 
-    const { open } = this.state.modal;
-    return (
-      <div className="ui container">
-        <div className="ui segment">
-          <form className="ui form error" onSubmit={handleSubmit}>
-            <h2 className="ui left floated header">{title}</h2>
+                <div className="column">
+                  <FormField
+                    name="displayName"
+                    label={t("apps.form.field.displayName")}
+                  />
+                </div>
 
-            {this.renderAdminBtn(initialValues)}
+                <div className=" sixteen wide column ">
+                  <FormField
+                    name="apiDomain"
+                    label={t("apps.form.field.apiDomain")}
+                  />
+                </div>
 
-            <div className="ui clearing divider"></div>
-            <div className="ui two column doubling stackable grid">
-              <div className="column ">
-                <Field
-                  name="appName"
-                  component={this.renderInput}
-                  label={texts.field.name}
-                />
+                <div className="column">
+                  <FormField
+                    component="textarea"
+                    name="description"
+                    label={t("apps.form.field.description")}
+                  />
+                </div>
+
+                <div className=" sixteen wide column "></div>
               </div>
-
-              <div className="column">
-                <Field
-                  name="displayName"
-                  component={this.renderInput}
-                  label={texts.field.displayName}
-                />
-              </div>
-
-              <div className=" sixteen wide column ">
-                <Field
-                  name="apiDomain"
-                  component={this.renderInput}
-                  label={texts.field.apiDomain}
-                />
-              </div>
-
-              <div className="column">
-                <Field
-                  name="description"
-                  component={this.renderTextarea}
-                  label={texts.field.description}
-                />
-              </div>
-              {error && <strong>{error}</strong>}
-              <div className=" sixteen wide column "></div>
-            </div>
-          </form>
-
-          <ConfirmModal
-            open={open}
-            actions={this.renderModalBtn}
-            header={texts.modal.title}
-            content={texts.modal.content}
-            submitBtn={submitBtn}
-          />
-
-          {this.renderSaveBtn(submitBtn)}
+            </Form>
+            <SaveButton
+              touched={touched}
+              errors={errors}
+              submitForm={submitForm}
+            />
+          </div>
         </div>
-      </div>
-    );
-  }
-}
-
-export const validate = formValues => {
-  const errors = {};
-
-  if (!formValues.appName) {
-    errors.appName = "emptyAppName";
-  }
-
-  if (!formValues.displayName) {
-    errors.displayName = "emptyDisplayName";
-  }
-
-  if (!formValues.apiDomain) {
-    errors.apiDomain = "emptyApiDomain";
-  }
-
-  return errors;
+      )}
+    />
+  );
 };
 
-export const validateBtn = form => {
-  if (form === undefined || !form.hasOwnProperty("values")) {
-    return false;
-  }
-
-  if (!Object.keys(validate(form.values)).length) {
-    return true;
-  }
-
-  return false;
-};
-
-export default reduxForm({
-  form: "appForm",
-  validate: validate
-})(AppForm);
+export default AppForm;

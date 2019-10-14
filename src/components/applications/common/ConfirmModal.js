@@ -13,14 +13,14 @@ class ConfirmModal extends React.Component {
   };
 
   render() {
-    const { open, header, content, actions } = this.props;
+    const { status, header, content, actions, submitBtn } = this.props;
     const { closeOnDimmerClick, closeOnEscape } = this.state;
 
     return (
       <div>
         <div>
           <Modal
-            open={open}
+            open={status}
             closeOnEscape={closeOnEscape}
             closeOnDimmerClick={closeOnDimmerClick}
             onClose={() => this.setState({ open: false })}
@@ -31,7 +31,7 @@ class ConfirmModal extends React.Component {
               <p>{content}</p>
             </Modal.Content>
 
-            <Modal.Actions>{actions()}</Modal.Actions>
+            <Modal.Actions>{actions(submitBtn)}</Modal.Actions>
           </Modal>
         </div>
       </div>

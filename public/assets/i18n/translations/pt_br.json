@@ -1,0 +1,47 @@
+{
+  "ptbr": "pt-br",
+  "language": {
+    "selectLanguage": "Selecione o Idioma"
+  },
+
+
+  "btn": {
+    "save": "Salvar",
+    "confirm": "Confirmar",
+    "yes": "Sim",
+    "no": "Não",
+    "cancel": "Cancelar",
+    "yesDelete": "Sim Excluir"
+  },
+
+  "apps": {
+
+    "list": {
+      "title": "Aplicações"
+    },
+
+    "form": {
+      "title": "Editar Aplicação",
+
+      "field": {
+        "name": "Nome da Aplicação",
+        "displayName": "Nome de Exibição",
+        "apiDomain": "Domínio da API",
+        "description": "Descrição"
+      },
+
+      "modal": {
+        "title": "Atenção!",
+        "content": "Os dados do formulário serão salvos. Deseja continuar?"
+      },
+
+      "validation": {
+        "emptyAppName": "Informe um título",
+        "emptyDisplayName": "É necessário um nome para exibição",
+        "emptyApiDomain": "O domínio da API é necessário"
+      }
+
+    }
+
+  }
+}

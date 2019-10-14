@@ -1,43 +1,33 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchApp, editApp } from "./../../actions/apps";
-import AppForm, { validateBtn } from "./AppForm";
-import LanguageContext from "../../contexts/LanguageContext";
+import AppForm from "./AppForm";
 
-class AppEdit extends React.Component {
-  onSubmit = formValues => {
-    this.props.editApp(this.props.match.params.id, formValues);
+const AppEdit = props => {
+  const onSubmit = formValues => {
+    props.editApp(props.match.params.id, formValues);
   };
 
-  componentDidMount() {
-    this.props.fetchApp(this.props.match.params.id);
-  }
+  useEffect(() => {
+    props.fetchApp(props.match.params.id);
+  }, []);
 
-  render() {
-    return (
-      <LanguageContext.Consumer>
-        {texts => (
-          <div>
-            <AppForm
-              title={texts.apps.form.title}
-              onSubmit={this.onSubmit}
-              initialValues={this.props.app}
-              history={this.props.history}
-              submitBtn={validateBtn(this.props.form)}
-              texts={texts}
-            />
-          </div>
-        )}
-      </LanguageContext.Consumer>
-    );
-  }
-}
+  return (
+    <div>
+      <AppForm
+        title={"texts.apps.form.title"}
+        onSubmit={onSubmit}
+        initialValues={props.app}
+        history={props.history}
+      />
+    </div>
+  );
+};
 
 const mapStateToProps = (state, ownState) => {
-  // console.log(state);
   return {
-    app: state.apps[ownState.match.params.id],
-    form: state.form.appForm
+    app: state.apps[ownState.match.params.id]
   };
 };
 

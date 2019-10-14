@@ -1,24 +1,27 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createApp } from "../../actions/apps";
-import AppForm, { validateBtn } from "./AppForm";
+import AppForm from "./AppForm";
 
-class AppCreate extends React.Component {
-  onSubmit = formValues => {
-    this.props.createApp(formValues);
+const AppCreate = props => {
+  const onSubmit = formValues => {
+    props.createApp(formValues);
   };
 
-  render() {
-    return (
-      <AppForm
-        title="Nova Aplicação"
-        onSubmit={this.onSubmit}
-        history={this.props.history}
-        submitBtn={validateBtn(this.props.form)}
-      />
-    );
-  }
-}
+  return (
+    <AppForm
+      title="Nova Aplicação"
+      onSubmit={onSubmit}
+      history={props.history}
+      initialValues={{
+        appName: "",
+        displayName: "",
+        apiDomain: "",
+        description: ""
+      }}
+    />
+  );
+};
 
 const mapStateToProps = (state, ownState) => {
   // console.log(state);
